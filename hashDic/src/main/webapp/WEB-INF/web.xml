@@ -61,7 +61,7 @@
 		<url-pattern>/STATIC/*</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
-		<welcome-file>/index.jsp</welcome-file>
+		<welcome-file>/WEB-INF/jsp/console.jsp</welcome-file>
 	</welcome-file-list>
 	<!-- 配置SESSION超时，单位是分钟 -->
 	<session-config>

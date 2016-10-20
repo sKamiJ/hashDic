@@ -30,9 +30,9 @@ public class StoreUnitFactory {
 	public static final long UPDATE_DATA_TASK_PERIOD = 1000;
 
 	/**
-	 * 存储当前原文的properties文件名
+	 * 存储当前信息的properties文件名
 	 */
-	public static final String PROP_NAME = "curTexts";
+	public static final String PROP_NAME = "current_info";
 
 	/**
 	 * 更新当前原文的任务周期

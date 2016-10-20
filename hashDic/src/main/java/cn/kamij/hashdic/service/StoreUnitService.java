@@ -5,12 +5,6 @@ import java.util.List;
 import cn.kamij.hashdic.model.StoreUnit;
 
 public interface StoreUnitService {
-	/**
-	 * 根据文本选择存储单元
-	 * 
-	 * @return 存在时返回该对象，不存在时返回null
-	 */
-	StoreUnit getByText(String text);
 
 	/**
 	 * 添加存储单元
@@ -32,4 +26,5 @@ public interface StoreUnitService {
 	 * @return 成功添加的数量
 	 */
 	int adds(List<StoreUnit> storeUnits);
+
 }

@@ -14,28 +14,29 @@
 	<sql id="Blob_Column_List">
 		md5
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
-		parameterType="java.lang.String">
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs">
 		select
 		<include refid="Base_Column_List" />
 		,
 		<include refid="Blob_Column_List" />
-		from store_unit
+		from ${tableName}
 		where text = #{text,jdbcType=VARCHAR}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	<delete id="deleteByPrimaryKey">
 		delete from
-		store_unit
-		where text = #{text,jdbcType=VARCHAR}
+		${tableName}
+		where text =
+		#{text,jdbcType=VARCHAR}
 	</delete>
-	<insert id="insert" parameterType="cn.kamij.hashdic.model.StoreUnit">
-		insert into store_unit (text,
+	<insert id="insert">
+		insert into ${tableName} (text,
 		md5)
-		values (#{text,jdbcType=VARCHAR},
-		#{md5,jdbcType=BINARY})
+		values
+		(#{record.text,jdbcType=VARCHAR},
+		#{record.md5,jdbcType=BINARY})
 	</insert>
 	<insert id="inserts" parameterType="java.util.List">
-		insert into store_unit (text,
+		insert into ${tableName} (text,
 		md5)
 		values
 		<!-- item表示集合中每一个元素进行迭代时的别名，index指定一个名字，用于表示在迭代过程中，每次迭代到的位置 -->
@@ -44,11 +45,19 @@
 			(#{item.text,jdbcType=VARCHAR},#{item.md5,jdbcType=BINARY})
 		</foreach>
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="cn.kamij.hashdic.model.StoreUnit">
+	<update id="updateByPrimaryKey">
 		update
-		store_unit
-		set md5 = #{md5,jdbcType=BINARY}
+		${tableName}
+		set md5 =
+		#{record.md5,jdbcType=BINARY}
 		where
-		text = #{text,jdbcType=VARCHAR}
+		text =
+		#{record.text,jdbcType=VARCHAR}
+	</update>
+	<update id="createNewTable" statementType="STATEMENT">
+		create table
+		${tableName}(
+		text varchar(20) primary key,
+		md5 binary(16) not null)
 	</update>
 </mapper>
