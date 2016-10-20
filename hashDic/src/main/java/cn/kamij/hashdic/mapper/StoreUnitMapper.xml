@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kamij.hashdic.mapper.StoreUnitMapper">
+	<resultMap id="BaseResultMap" type="cn.kamij.hashdic.model.StoreUnit">
+		<id column="text" property="text" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="cn.kamij.hashdic.model.StoreUnit"
+		extends="BaseResultMap">
+		<result column="md5" property="md5" jdbcType="BINARY" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		text
+	</sql>
+	<sql id="Blob_Column_List">
+		md5
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from store_unit
+		where text = #{text,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		store_unit
+		where text = #{text,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="cn.kamij.hashdic.model.StoreUnit">
+		insert into store_unit (text,
+		md5)
+		values (#{text,jdbcType=VARCHAR},
+		#{md5,jdbcType=BINARY})
+	</insert>
+	<insert id="inserts" parameterType="java.util.List">
+		insert into store_unit (text,
+		md5)
+		values
+		<!-- item表示集合中每一个元素进行迭代时的别名，index指定一个名字，用于表示在迭代过程中，每次迭代到的位置 -->
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.text,jdbcType=VARCHAR},#{item.md5,jdbcType=BINARY})
+		</foreach>
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="cn.kamij.hashdic.model.StoreUnit">
+		update
+		store_unit
+		set md5 = #{md5,jdbcType=BINARY}
+		where
+		text = #{text,jdbcType=VARCHAR}
+	</update>
+</mapper>
