@@ -47,12 +47,12 @@ public class StoreUnitServiceImpl implements StoreUnitService {
 	/**
 	 * 当前表名
 	 */
-	private String tableName = TABLE_PREFIX + PropUtils.getPropInRoot(PROP_NAME, TABLE_INDEX);
+	private volatile String tableName = TABLE_PREFIX + PropUtils.getPropInRoot(PROP_NAME, TABLE_INDEX);
 
 	/**
 	 * 当前表的元组数量
 	 */
-	private int tableTupleNum = Integer.parseInt(PropUtils.getPropInRoot(PROP_NAME, TABLE_TUPLE_NUM));
+	private volatile int tableTupleNum = Integer.parseInt(PropUtils.getPropInRoot(PROP_NAME, TABLE_TUPLE_NUM));
 
 	/**
 	 * 创建、更新表名，并重置当前元组数
