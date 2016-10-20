@@ -54,9 +54,9 @@
 		text =
 		#{record.text,jdbcType=VARCHAR}
 	</update>
-	<update id="createNewTable" statementType="STATEMENT">
+	<update id="createNewTable">
 		create table
-		${tableName}(
+		${tableName} (
 		text varchar(20) primary key,
 		md5 binary(16) not null)
 	</update>

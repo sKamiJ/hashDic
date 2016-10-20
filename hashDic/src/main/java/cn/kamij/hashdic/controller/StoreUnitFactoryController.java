@@ -6,8 +6,6 @@ import java.util.Vector;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
 
-import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.kamij.hashdic.service.StoreUnitService;
 import cn.kamij.hashdic.sufac.FactoryData;
 import cn.kamij.hashdic.sufac.SenderData;
 import cn.kamij.hashdic.sufac.StoreUnitCreatorGroup;
@@ -37,9 +34,6 @@ import cn.kamij.hashdic.utils.PropUtils;
  */
 @Controller("storeUnitFactoryController")
 public class StoreUnitFactoryController {
-	@Resource
-	private StoreUnitService storeUnitService;
-
 	/**
 	 * 生成日志文件
 	 */

@@ -59,8 +59,8 @@ public class StoreUnitServiceImpl implements StoreUnitService {
 	 */
 	private void updateTableName() {
 		tableLock.writeLock().lock();
-		int tableIndex = Integer.parseInt(PropUtils.getPropInRoot(PROP_NAME, TABLE_INDEX)) + 1;
-		PropUtils.setPropInRoot(PROP_NAME, TABLE_INDEX, String.valueOf(tableIndex), true);
+		String tableIndex = String.valueOf(Integer.parseInt(tableName.replace(TABLE_PREFIX, "")) + 1);
+		PropUtils.setPropInRoot(PROP_NAME, TABLE_INDEX, tableIndex, true);
 		tableName = TABLE_PREFIX + tableIndex;
 		storeUnitMapper.createNewTable(tableName);
 		tableTupleNum = 0;
