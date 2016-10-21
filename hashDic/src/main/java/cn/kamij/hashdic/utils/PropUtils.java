@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Properties;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.springframework.web.util.UriUtils;
 
@@ -38,6 +39,11 @@ public class PropUtils {
 	private static final String RESOURCES = "src/main/resources/";
 
 	/**
+	 * 读写锁
+	 */
+	private static final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock(true);
+
+	/**
 	 * 获取properties文件中的某个资源
 	 * 
 	 * @param propPath
@@ -48,20 +54,23 @@ public class PropUtils {
 	 */
 	public static String getProp(String propPath, String resourceName) {
 		String result = null;
+		rwl.readLock().lock();
 		try {
 			Properties prop = new Properties();
 			// 读取资源
 			Reader reader = new FileReader(new File(propPath));
 			prop.load(reader);
+			reader.close();
 			// 获取资源
 			String resource = prop.getProperty(resourceName);
 			if (resource != null) {
 				// 不为空时获取
 				result = resource.trim();
 			}
-			reader.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			rwl.readLock().unlock();
 		}
 		return result;
 	}
@@ -107,12 +116,14 @@ public class PropUtils {
 	 */
 	public static boolean setProp(String propPath, String resourceName, String newValue, boolean ifSetNew) {
 		boolean result = true;
+		rwl.writeLock().lock();
 		try {
 			Properties prop = new Properties();
 			// 读取资源
 			File file = new File(propPath);
 			Reader reader = new FileReader(file);
 			prop.load(reader);
+			reader.close();
 			// 获取资源
 			String resource = prop.getProperty(resourceName);
 			if (resource != null || ifSetNew == true) {
@@ -124,10 +135,11 @@ public class PropUtils {
 			} else {
 				result = false;
 			}
-			reader.close();
 		} catch (Exception e) {
 			result = false;
 			e.printStackTrace();
+		} finally {
+			rwl.writeLock().unlock();
 		}
 		return result;
 	}
@@ -165,7 +177,7 @@ public class PropUtils {
 	public static boolean setPropInResources(String propName, String resourceName, String newValue, boolean ifSetNew) {
 		return setProp(RESOURCES + propName + ".properties", resourceName, newValue, ifSetNew);
 	}
-	
+
 	/**
 	 * 更新properties文件中的某个资源，无法新建
 	 * 
@@ -210,5 +222,5 @@ public class PropUtils {
 	public static boolean updatePropInResources(String propName, String resourceName, String newValue) {
 		return updateProp(RESOURCES + propName + ".properties", resourceName, newValue);
 	}
-	
+
 }
