@@ -129,6 +129,7 @@ public class PropUtils {
 			if (resource != null || ifSetNew == true) {
 				// 新建或更改该资源
 				prop.setProperty(resourceName, newValue.trim());
+				// 在Writer初始化后，文件会被清空，在多线程模式下别的线程会无法读取数据，因此这里加了锁
 				Writer writer = new FileWriter(file);
 				prop.store(writer, null);
 				writer.close();
