@@ -75,7 +75,7 @@ public class EncodeUtils {
 	 * Unicode的其中一个使用方式，全球统一编码，大部分字符为2个字节（导致不兼容ASCII）也有一部分字符为4个字节。<br/>
 	 * 1个中文2个字节。<br/>
 	 */
-	public static final String UTF16 = "UTF-16LE";
+	public static final String UTF16 = "UTF-16BE";
 	/**
 	 * Unicode的其中一个使用方式，1到4个字节变长编码，兼容ASCII。<br/>
 	 * 1个中文3个字节。<br/>
